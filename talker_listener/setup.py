@@ -23,7 +23,9 @@ setup(
             'talkerNode_m1 = talker_listener.talker_node_m1:main',
             'talkerNode_m2 = talker_listener.talker_node_m2:main',
             'talkerNode_m1m2 = talker_listener.talker_node_m1m2:main',
-            'listenerNode = talker_listener.listener_node:main'
+            'listenerNode = talker_listener.listener_node:main',
+            'rapportNode = talker_listener.rapport_node:main',
+            'visualisationNode = talker_listener.visualisation_data_node:main'
         ],
     },
 )
