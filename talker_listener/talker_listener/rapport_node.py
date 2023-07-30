@@ -30,6 +30,10 @@ class rapportNode(Node):
         self.distance_2points_moy   = 0.0
         self.sum_distance_2points   = 0.0
         self.count_distance_2points = 0
+        
+        self.diffhauteur = 0.0
+        self.pointmoy 	 = 0.0
+       
 
     def points_callback(self, msg):
         # Vérifier si le message contient bien des points
@@ -83,23 +87,35 @@ class rapportNode(Node):
                     self.distance_2points_min = self.distance_2points
                 elif self.distance_2points_min > self.distance_2points:
                     self.distance_2points_min = self.distance_2points
-        
+                    
+        # Differentiel de hauteur
+	self.diffhauteur = abs(self.msg_z_max - self.msg_z_min)
+	# nb_points moyen [m^2]
+	self.pointmoy = pow((1/self.distance_2points_moy)/100), 2)
+	
         self.msg_x0 = self.msg_x
         self.msg_y0 = self.msg_y
         print("--------------------------------------------------------------------")
         print("Z min :", "{:.2f}".format(self.msg_z_min), " | ",
               "Z max :", "{:.2f}".format(self.msg_z_max), " | ",
               "Z moy :", "{:.2f}".format(self.msg_z_moy), " | ",
-              "Z count :", "{:.2f}".format(self.count))
+              "Z count :", "{:.2f}".format(self.count), " | ",
+              "Differentiel Hauteur :", "{:.2f}".format(self.diffhauteur))
         if self.distance_2points_min is not None:
             print("D min :", "{:.2f}".format(self.distance_2points_min), " | ",
                 "D max :", "{:.2f}".format(self.distance_2points_max), " | ",
                 "D moy :", "{:.2f}".format(self.distance_2points_moy), " | ",
-                "D count :", "{:.2f}".format(self.count_distance_2points))
+                "D count :", "{:.2f}".format(self.count_distance_2points), " | ",
+                "Nb_Points moyen :", "{:.2f}".format(self.pointmoy))            
 
         #Générer un rapport PDF de préférence avec les données des print et un en-tête
         #Trouver un moyen pour mettre une capteur de la fenetre de rviz dans le PDF
-
+	if flag_write is True
+		#
+		# Ajouter code pour generation rapport
+		#
+	
+	
 def main(args=None):
     rclpy.init(args=args)
     node = rapportNode()
