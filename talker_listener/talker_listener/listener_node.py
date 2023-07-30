@@ -15,10 +15,6 @@ import sensor_msgs.msg as sensor_msgs
 from sensor_msgs.msg import PointCloud2, PointField
 from std_msgs.msg import Header
 
-
-width = 100
-height = 100
-
 class ListenerNode(Node):
     def __init__(self):
         super().__init__("listener_node")
@@ -61,23 +57,23 @@ class ListenerNode(Node):
             self.get_logger().info('Valeur POINTCLOUD envoyee')
 
 
-    def publishPC2(self, lidar_data, moteur1_data, moteur2_data):
+    def publishPC2(self, lidar_data, m1_data, m2_data):
         #Initialisation des donnees
         angle_origine_m1 = 90.0
         angle_origine_m2 = 90.0
 
         
         #Calcul des angles pour le PointCloud
-        x = lidar_data * np.sin(moteur2_data - angle_origine_m2)
-        y = lidar_data * np.sin(moteur1_data - angle_origine_m1)
-        z = lidar_data * np.abs(np.cos(moteur1_data - angle_origine_m1) * np.cos(moteur2_data - angle_origine_m2))
+        x = lidar_data * np.sin((m2_data - angle_origine_m2) * np.pi/180)
+        y = lidar_data * np.sin((m1_data - angle_origine_m1) * np.pi/180)
+        z = lidar_data * np.abs(np.cos((m1_data - angle_origine_m1) * np.pi/180) * np.cos((m2_data - angle_origine_m2) * np.pi/180))
         
         points = np.array([(x,y,z)], dtype=[('x', np.float32), ('y', np.float32), ('z', np.float32)])  # Point 3 avec coordonnées XYZ et couleur RGB
         
         # Créer le message PointCloud2
         header = Header()
         header.frame_id = "base_link"  # Indiquez ici le nom du frame_id approprié
-        #header.stamp = self.get_clock().now().to_msg()
+        header.stamp = self.get_clock().now().to_msg()
         pcl_msg = PointCloud2()
         pcl_msg.header = header
         pcl_msg.height = 1
