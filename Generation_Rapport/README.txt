@@ -1,6 +1,10 @@
-Necessite reportlab
+Module de capture d'ecran automatique 
 
-pip install reportlab
+Librairie necessaire : reportlab
+https://www.reportlab.com/ 
+
+Installation
+	pip3 install reportlab
 
 fonctions a rajouter
 	differentiel de hauteur = abs(Zmax - Zmin)
